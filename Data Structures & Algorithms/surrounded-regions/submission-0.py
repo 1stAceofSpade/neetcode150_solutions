@@ -1,0 +1,40 @@
+class Solution:
+    def solve(self, board: list[list[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        m , n = len(board) , len(board[0])
+        visit = [[False]*n for i in range(m)]
+        def dfs(i , j):
+            if i<0 or i>=m or j<0 or j>=n or visit[i][j] or board[i][j]=="X":
+                return
+            visit[i][j]=True
+            dfs(i+1 , j)
+            dfs(i-1 , j)
+            dfs(i , j+1)
+            dfs(i , j-1)
+        for i in range(m):
+            if board[i][0]=="O":
+                dfs(i , 0)
+        for i in range(m):
+            if board[i][n-1]=="O":
+                dfs(i , n-1)
+        
+        for i in range(m):
+            if board[i][0]=="O":
+                dfs(i , 0)
+        for i in range(m):
+            if board[i][n-1]=="O":
+                dfs(i , n-1)
+        for j in range(n):
+            if board[0][j]=="O":
+                dfs(0 , j)
+        for j in range(n):
+            if board[m-1][j]=="O":
+                dfs(m-1 , j)  
+        for i in range(1 , m-1):
+            for j in range( 1, n-1):
+                if (not visit[i][j]) and (board[i][j]=="O"):
+                    board[i][j]="X"
+        
+        
